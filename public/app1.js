@@ -42,8 +42,8 @@ MyApp.controller("myCtrl", function($scope, $timeout, ApplicationService, Loggin
     $scope.editMode = false;
     let editIndex = -1;
 
-    // Set session timeout duration (10000 milliseconds for demonstration)
-    var sessionTimeoutDuration = 10000;
+    // Set session timeout duration (30 minutes for demonstration)
+    var sessionTimeoutDuration = 1800000;
 
     // Set session timeout
     $timeout(function () {
