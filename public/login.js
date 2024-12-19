@@ -6,7 +6,7 @@ $scope.submitLogin = function() {
 
     console.log('Login Data:', loginData); // Debugging line
 
-    $http.post('http://localhost:3000/api/login', loginData)
+    $http.post('https://iasf2025.onrender.com/api/login', loginData)
         .then(function(response) {
             alert('Login successful!');
             localStorage.setItem('token', response.data.token);
