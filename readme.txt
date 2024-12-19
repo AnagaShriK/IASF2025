@@ -16,11 +16,18 @@ Step3: Sever code modification for connectivity
             .then(() => console.log('MongoDB Atlas connected'))
             .catch(err => console.log('MongoDB connection error:', err));
 
-Firebase deploy
-
-Step1: New project, webapp in firebase console
-Step2: firebase-config.js in /public
-Step3: Add these lines in all html files
-        <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-        <script src="firebase-config.js"></script>
-Step4: Go to https://greengroves-700c4.web.app/home.html
+Render Hosting
+Step1: Upload all project pages to your Github Repo(including server.mjs, packgae.json and package-lock.json) - need not add .env file
+Step2: Follow steps given in https://render.com/docs/free
+        1) sign-up using google account
+        2) create new web service
+        3) select github repo
+        4) check if run and build commands are correct
+        5) add .env file, select yes for automatic deploy commits
+        6) add custom domains if needed
+        7) deploy
+        8) if any further changes are made in github codes, clear cache and deploy
+        9) once build and deploy is complete, your service is live message shows
+        10) Open the link provided below project name which is your domain URL (eg:https://iasf2025.onrender.com)
+Step3: Navigate through app and check if backend works
+NOTE: Render may take time to open domain after inacivity of more than 15 minutes
