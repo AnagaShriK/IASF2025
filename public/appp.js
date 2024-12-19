@@ -2,7 +2,7 @@ var myApp = angular.module('myApp', []);
 
 // Registration service to manage registration data
 myApp.factory('RegistrationService', function($http) {
-    var baseUrl = 'http://localhost:3000/api/register';  // Your backend API base URL
+    var baseUrl = 'https://iasf2025.onrender.com/api/register';  // Your backend API base URL
     
     return {
         addRegistration: function(registration) {
