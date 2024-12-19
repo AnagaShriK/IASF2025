@@ -15,7 +15,7 @@ app.controller('orderCtrl', function($scope, $http) {
 
     // Fetch volunteering opportunities (Read)
     $scope.loadOpportunities = function() {
-        $http.get('http://localhost:3000/services')
+        $http.get('https://iasf2025.onrender.com/services')
             .then(function(response) {
                 $scope.opportunities = response.data;
             })
@@ -26,7 +26,7 @@ app.controller('orderCtrl', function($scope, $http) {
 
     // Add a new volunteering service (Create)
     $scope.addNewService = function() {
-        $http.post('http://localhost:3000/services', $scope.newService)
+        $http.post('https://iasf2025.onrender.com/services', $scope.newService)
             .then(function(response) {
                 alert('Service added successfully!');
                 $scope.newService = {}; // Reset the form
@@ -39,7 +39,7 @@ app.controller('orderCtrl', function($scope, $http) {
 
     // Delete a volunteering service (Delete)
     $scope.deleteService = function(serviceId) {
-        $http.delete('http://localhost:3000/services/' + serviceId)
+        $http.delete('https://iasf2025.onrender.com/services/' + serviceId)
             .then(function(response) {
                 alert('Service deleted successfully!');
                 $scope.loadOpportunities(); // Refresh the list
