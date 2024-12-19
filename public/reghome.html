@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="greenGrovesApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Groves</title>
+    <link rel="stylesheet" href="home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+    <!--script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="firebase-config.js"></script-->
+</head>
+<body ng-controller="mainController">
+    
+    <header>
+        <nav>
+            <ul>
+		        <li><a href="organisation_register.html">OrganisationRegister</a></li>
+                <li><a href="Volunteering_Register.html">VolunteeringRegister</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>Green Groves</h1>
+            <h1 >Empower Your Future,<br>Sustain Our World</h1>
+            <p >Discover Volunteer Opportunities and Internships and Much More</p>
+            <custom-welcome-message></custom-welcome-message>
+            <!-- Register Now Button -->
+            <button class="register-btn" onclick="window.location.href='registrationpage.html'">Register now to Know more</button>
+            <button class="register-btn" onclick="window.location.href='login.html'">Already Registered Login Here</button>
+        </section>
+    </main>
+    <!-- Chatbot Button and Modal -->
+    <div class="chatbot-container">
+        <button class="chatbot-button" onclick="openChatbot()">Chat with Us</button>
+        
+        <!-- Chatbot Modal -->
+        <div id="chatbotModal" class="chatbot-modal">
+            <div class="chatbot-modal-content">
+                <span class="close" onclick="closeChatbot()">&times;</span>
+                <div class="chatbot-header">
+                    <h3><b>Help</b></h3>
+                </div>
+                <div class="chatbot-body" id="chatBody">
+                    <!-- Messages will appear here -->
+                </div>
+                <div class="chat-footer">
+                    <input type="text" id="userInput" placeholder="Type a message..." required>
+                    <button type="submit" id="sendBtn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="contact-icons">
+            <a href="tel:+123456789">Phone</a>
+            <a href="mailto:info@greengroves.com">Email</a>
+            <a href="http://www.greengroves.com">Website</a>
+            <a href="http://www.greengroves.com/chat">Chat</a>
+            <a href="mailto:support@greengroves.com">Support</a>
+            <a href="http://www.greengroves.com/location">Location</a>
+        </div>
+    </footer>
+    <script>
+        function openChatbot() {
+            document.getElementById('chatbotModal').style.display = 'block';
+        }
+
+        function closeChatbot() {
+            document.getElementById('chatbotModal').style.display = 'none';
+        }
+
+        document.getElementById("sendBtn").addEventListener("click", sendMessage);
+        document.getElementById("userInput").addEventListener("keypress", function (e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        async function sendMessage() {
+            const userInput = document.getElementById("userInput").value;
+            if (!userInput) return;
+
+            // Display user's message
+            displayMessage(userInput, 'user');
+
+            // Call backend API
+            try {
+                const response = await fetch("http://localhost:3000/api/query", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ question: userInput })
+                });
+
+                if (!response.ok) throw new Error("Error fetching response");
+
+                const data = await response.json();
+                displayResponseAsList(data.answer, 'bot');
+            } catch (error) {
+                displayMessage("Error: " + error.message, 'bot');
+            }
+
+            document.getElementById("userInput").value = "";
+        }
+
+        function displayMessage(message, sender) {
+            const messageContainer = document.createElement("div");
+            messageContainer.classList.add("chat-message", sender === 'user' ? 'user-message' : 'bot-message');
+
+            const messageBubble = document.createElement("div");
+            messageBubble.classList.add("message");
+            messageBubble.textContent = message;
+
+            messageContainer.appendChild(messageBubble);
+            document.getElementById("chatBody").appendChild(messageContainer);
+
+            // Scroll to bottom
+            document.getElementById("chatBody").scrollTop = document.getElementById("chatBody").scrollHeight;
+        }
+
+        function displayResponseAsList(message, sender) {
+    const messageContainer = document.createElement("div");
+    messageContainer.classList.add("chat-message", sender === 'user' ? 'user-message' : 'bot-message');
+
+    const messageBubble = document.createElement("div");
+    messageBubble.classList.add("message");
+    messageBubble.style.textAlign = "justify";  // Apply justify alignment
+
+    // Format as plain text without hyphen or bullet points
+    const lines = message.split('\n');
+    lines.forEach(line => {
+        const lineElement = document.createElement("p");  // Using <p> for each line
+        lineElement.textContent = line.trim();
+        messageBubble.appendChild(lineElement);
+    });
+
+    messageContainer.appendChild(messageBubble);
+    document.getElementById("chatBody").appendChild(messageContainer);
+
+    // Scroll to bottom
+    document.getElementById("chatBody").scrollTop = document.getElementById("chatBody").scrollHeight;
+	}
+
+    </script>
+</body>
+</html>
