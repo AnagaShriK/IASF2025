@@ -14,11 +14,11 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-dotenv.config({ path: path.join('C:/Users/Harini/Downloads/GreenGrovesAtlas/GreenGroves/.env') });
+dotenv.config();
 const mongoURI = process.env.MONGO_URI;
 
 // Use CORS middleware
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
 app.use(express.json()); // Middleware to parse JSON request bodies
 
