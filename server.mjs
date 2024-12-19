@@ -19,30 +19,22 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json()); // Middleware to parse JSON request bodies
 
-app.use('/uploads', express.static(path.join('C:/Users/Harini/Downloads/GreenGrovesAtlas/GreenGroves/uploads')));
-
-app.use(express.static(path.join('C:/Users/Harini/Downloads/GreenGrovesAtlas/GreenGroves')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Atlas connected'))
     .catch(err => console.log('MongoDB connection error:', err));
 
-// Serve static files from
-app.use(express.static(path.join('C:/Users/Harini/Downloads/GreenGrovesAtlas/GreenGroves/')));
-app.use(express.static(path.join('C:/Users/Harini/Downloads/GreenGrovesAtlas/GreenGroves/public')));
-
-
 
 // Serve home.html at the root route
 app.get('/', (req, res) => {
-    res.sendFile(path.join('C:/Users/Harini/Downloads/GreenGrovesAtlas/GreenGroves/public/reghome.html'));
+    res.sendFile(path.join(__dirname, 'public', 'reghome.html'));
 });
 
 // Load environment variables
 console.log("Loaded GITHUB_TOKEN:", process.env.GITHUB_TOKEN);
-
-
 
 
 const token = process.env["GITHUB_TOKEN"];
