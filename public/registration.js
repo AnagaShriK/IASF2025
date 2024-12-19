@@ -12,7 +12,7 @@ app.controller('registrationController', function($scope, $http) {
             password: $scope.password
         };
 
-        $http.post('http://localhost:3000/api/register', userData)
+        $http.post('https://iasf2025.onrender.com/api/register', userData)
             .then(function(response) {
                 alert('Registration successful!');
                 $scope.getRegistrations();
@@ -25,7 +25,7 @@ app.controller('registrationController', function($scope, $http) {
     };
 
     $scope.getRegistrations = function() {
-        $http.get('http://localhost:3000/api/register')
+        $http.get('https://iasf2025.onrender.com/api/register')
             .then(function(response) {
                 $scope.registrations = response.data;
             })
@@ -35,7 +35,7 @@ app.controller('registrationController', function($scope, $http) {
     };
 
     $scope.removeRegistration = function(id) {
-        $http.delete('http://localhost:3000/api/register/' + id)
+        $http.delete('https://iasf2025.onrender.com/api/register/' + id)
             .then(function() {
                 $scope.getRegistrations();
             })
@@ -63,7 +63,7 @@ app.controller('registrationController', function($scope, $http) {
             password: $scope.password
         };
 
-        $http.put('http://localhost:3000/api/register/' + $scope.selectedUser._id, userData)
+        $http.put('https://iasf2025.onrender.com/api/register/' + $scope.selectedUser._id, userData)
             .then(function(response) {
                 alert('Update successful!');
                 $scope.getRegistrations();
