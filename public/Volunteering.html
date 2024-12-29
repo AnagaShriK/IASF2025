@@ -51,7 +51,7 @@
         app.controller('myCtrl', function($scope, $http) {
             $scope.today = new Date();
 
-            $http.get('http://localhost:3000/services') // Update with the actual backend URL
+            $http.get('https://iasf2025.onrender.com/services') // Update with the actual backend URL
   .then(function(response) {
     $scope.events = response.data.map(function(event) {
       return {
