@@ -9,7 +9,7 @@ npm install express dotenv cors path body-parser mongoose multer
 MongoDB Atlas
 Step1: Create db in Atlas
 Step2: .env - MONGO_URI(add/dbname in conn string)
-Step3: Sever code modification for connectivity
+Step3: Server code modification for connectivity
         dotenv.config({ path: path.join('D:/IASF proj/GreenGroves/.env') });
         const mongoURI = process.env.MONGO_URI;
         mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -31,3 +31,40 @@ Step2: Follow steps given in https://render.com/docs/free
         10) Open the link provided below project name which is your domain URL (eg:https://iasf2025.onrender.com)
 Step3: Navigate through app and check if backend works
 NOTE: Render may take time to open domain after inacivity of more than 15 minutes
+
+Codes to change from localhost to render hosting:
+
+a) For 1-7 => http://localhost:3000 to https://iasf2025.onrender.com
+
+1) app1.js
+2) appp.js
+3) login.js
+4) reghome.html
+5) registration.js
+6) Volunteering.html
+7) volunteering.js
+
+b) For server.mjs
+1) Add these lines
+	import { fileURLToPath } from 'url';
+
+	const __filename = fileURLToPath(import.meta.url);
+	const __dirname = path.dirname(__filename);
+
+2) Remove path in dotenv.config() line => dotenv.config();
+
+3) Change to app.use(cors({ origin: '*' }));
+
+4) Modify path:
+	app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+	app.use(express.static(path.join(__dirname, 'public')));
+
+	app.get('/', (req, res) => {
+   		res.sendFile(path.join(__dirname, 'public', 'reghome.html'));
+	});
+
+c) For package.json - add these lines at the end
+,
+  "engines": {
+    "node": ">=18"
+  }
