@@ -80,6 +80,39 @@ app.post('/api/query', async (req, res) => {
 
 
 
+app.post('/api/career-query', async(req, res)=>{
+    const userInput = req.body.question; // Get user input from request body
+
+    const client = new ModelClient(
+        "https://models.inference.ai.azure.com",
+        new AzureKeyCredential(token)
+    );
+
+    try {
+        const response = await client.path("/chat/completions").post({
+            body: {
+                messages: [
+                    { role: "system", content: "You are a chatbot in a web application that allow students to apply for volunteering, internships and events and sustainable organisations to display such events hosted by them. Respond only the query that students ask based on career guidance or future activities for sustainability. If any other request arises from user reply by informing that you were not trained to do so." },
+                    { role: "user", content: userInput }
+                ],
+                model: "gpt-4o",
+                temperature: 0.34,
+                max_tokens: 4096,
+                top_p: 1
+            }
+        });
+
+        if (response.status !== "200") {
+            throw response.body.error;
+        }
+        
+        res.json({ answer: response.body.choices[0].message.content });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "An error occurred while processing your request." });
+    }
+});
+
 // Define Mongoose schemas and models
 const registrationSchema = new mongoose.Schema({
     name: String,
@@ -295,6 +328,7 @@ app.post('/api/organisations', upload.single('logo'), async (req, res) => {
 // Login API
 app.post('/api/login', async (req, res) => {
     const { username, password, role } = req.body;
+
     try {
         let user = null;
         if (role === 'Organisation') {
@@ -304,12 +338,21 @@ app.post('/api/login', async (req, res) => {
         } else {
             return res.status(400).json({ message: 'Invalid role selected' });
         }
-        if (!user) return res.status(400).json({ message: 'Invalid credentials' });
-        res.status(200).json({ message: 'Login successful' });
+
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+
+        // Respond with the organisation/user name after successful login
+        res.status(200).json({
+            message: 'Login successful',
+            name: user.name  // Send organisation or user name
+        });
     } catch (err) {
         res.status(500).json({ message: 'Server error: ' + err.message });
     }
 });
+
 
 // Event API
 // Backend code for uploading events
@@ -332,6 +375,20 @@ app.post('/api/events', upload.single('logo'), (req, res) => {
 });
 
 // Events API
+app.get('/api/events', async (req, res) => {
+    try {
+        const events = await Event.find();
+        // Assuming that the logo filename is stored in each event
+        const eventsWithLogo = events.map(event => ({
+            ...event.toObject(),
+            logo: `uploads/${event.logo}` // Prepend the uploads folder to the logo path
+        }));
+        res.status(200).json(eventsWithLogo);
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching events: ' + err.message });
+    }
+});
+
 app.get('/api/events', async (req, res) => {
     try {
         const events = await Event.find();
@@ -400,6 +457,7 @@ app.post('/api/internships', upload.single('logo'), async (req, res) => {
         res.status(500).json({ message: 'Internship creation failed: ' + err.message });
     }
 });
+
 
 
 
