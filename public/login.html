@@ -47,22 +47,25 @@
             };
 
             // Make POST request to login API
-            $http.post('/api/login', data)
-                .then(function(response) {
-                    if (response.data.message === 'Login successful') {
-                        // Redirect based on the role
-                        if ($scope.role === 'User') {
-                            window.location.href = 'aboutpage.html';
-                        } else if ($scope.role === 'Organisation') {
-                            window.location.href = 'home1.html';
-                        }
-                    } else {
-                        alert(response.data.message);
+            $http.post('http://localhost:3000/api/login', data)
+            .then(function(response) {
+                if (response.data.message === 'Login successful') {
+                    // Store the organisation's name in localStorage
+                    if ($scope.role === 'Organisation') {
+                        localStorage.setItem('organizationName', response.data.name);
+                        window.location.href = 'home1.html';  // Organisation home page
+                    } else if ($scope.role === 'User') {
+                        localStorage.setItem('userName', response.data.name);
+                        window.location.href = 'aboutpage.html';  // User home page
                     }
-                })
-                .catch(function(error) {
-                    alert('Login failed: ' + error.data.message);
-                });
+                } else {
+                    alert(response.data.message);
+                }
+            })
+            .catch(function(error) {
+                alert('Login failed: ' + error.data.message);
+            });
+
         };
     });
     // User Session Factory
