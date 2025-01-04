@@ -254,3 +254,21 @@ button:hover {
     color: black;
     text-decoration: none;
 }  
+.logout-button {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+}
+
+.logout-button a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-image: url('https://thumb.ac-illust.com/8a/8ad859c65a6967da3ee58835e37fade3_t.jpeg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+    text-indent: -9999px; /* Hide text inside the button */
+    cursor: pointer;
+    text-decoration: none;
+}
