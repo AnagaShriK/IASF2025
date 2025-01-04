@@ -8,8 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
-    <!--script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="firebase-config.js"></script-->
 </head>
 <body ng-controller="mainController">
     <header>
@@ -20,28 +18,42 @@
                 <li><a href="organisation page.html">Organisations</a></li>
                 <li><a href="internpage.html">Internships</a></li>
                 <li><a href="aboutpage.html">About Us</a></li>
-		    
             </ul>
         </nav>
+        <div class="logout-button">
+            <a href="#" aria-label="Logout" ng-click="logout()"></a>
+        </div>
     </header>
+
     <main>
         <section class="hero">
             <h1>Green Groves</h1>
-            <h1 >Empower Your Future,<br>Sustain Our World</h1>
-            <p ng-class=>Discover Volunteer Opportunities and Internships and Much More</p>
-            <custom-welcome-message></custom-welcome-message>
-            
+            <h1>Empower Your Future,<br>Sustain Our World</h1>
+            <p>Discover Volunteer Opportunities and Internships and Much More</p>
         </section>
     </main>
+
     <footer>
         <div class="contact-icons">
-            <a href="tel:+123456789">Phone</a>
-            <a href="mailto:info@greengroves.com">Email</a>
-            <a href="http://www.greengroves.com">Website</a>
-            <a href="http://www.greengroves.com/chat">Chat</a>
-            <a href="mailto:support@greengroves.com">Support</a>
-            <a href="http://www.greengroves.com/location">Location</a>
+            <a href="tel:+91 6369631469">Phone</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anaga@student.tce.edu&su=Support%20Request&body=Please%20provide%20details." target="_blank">Email</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anaga@student.tce.edu&su=Support%20Request&body=Please%20provide%20details." target="_blank">Support</a>
+            <a href="https://maps.app.goo.gl/tjYw6thU3PgV9AN6A" target="_blank">Location</a>
         </div>
     </footer>
+
+    <script>
+        angular.module('greenGrovesApp', [])
+        .controller('mainController', function($scope) {
+            $scope.logout = function() {
+                // Clear the localStorage variables
+                localStorage.setItem('organizationName', null);
+                localStorage.setItem('userName', null);
+                
+                // Redirect to the homepage (or any other page)
+                window.location.href = 'reghome.html';
+            };
+        });
+    </script>
 </body>
 </html>
