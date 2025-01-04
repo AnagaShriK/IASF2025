@@ -43,13 +43,13 @@ MyApp.controller("myCtrl", function($scope, $timeout, ApplicationService, Loggin
     let editIndex = -1;
 
     // Set session timeout duration (30 minutes for demonstration)
-    var sessionTimeoutDuration = 1800000;
+    /*var sessionTimeoutDuration = 1800000;
 
     // Set session timeout
     $timeout(function () {
         NotificationService.notify('Your session is going to time out.');
     }, sessionTimeoutDuration);
-
+*/
     // Load existing applications
     ApplicationService.getDetails().then(function(response) {
         $scope.applications = response.data;
