@@ -4,16 +4,16 @@ var MyApp = angular.module("MyApp", []);
 MyApp.factory('ApplicationService', function($http) {
     return {
         addDetails: function(application) {
-            return $http.post('https://iasf2025.onrender.com/api/applications', application);
+            return $http.post('http://localhost:3000/api/applications', application);
         },
         getDetails: function() {
-            return $http.get('https://iasf2025.onrender.com/api/applications');
+            return $http.get('http://localhost:3000/api/applications');
         },
         removeDetails: function(id) {
-            return $http.delete('https://iasf2025.onrender.com/api/applications/' + id);
+            return $http.delete('http://localhost:3000/api/applications/' + id);
         },
         updateDetails: function(id, application) {
-            return $http.put('https://iasf2025.onrender.com/api/applications/' + id, application);
+            return $http.put('http://localhost:3000/api/applications/' + id, application);
         }
     };
 });
@@ -40,20 +40,24 @@ MyApp.factory('NotificationService', function() {
 MyApp.controller("myCtrl", function($scope, $timeout, ApplicationService, LoggingService, NotificationService) {
     $scope.submitted = false;
     $scope.editMode = false;
+
     let editIndex = -1;
 
-    // Set session timeout duration (30 minutes for demonstration)
-    /*var sessionTimeoutDuration = 1800000;
+    // // Set session timeout duration (10000 milliseconds for demonstration)
+    // var sessionTimeoutDuration = 10000;
 
-    // Set session timeout
-    $timeout(function () {
-        NotificationService.notify('Your session is going to time out.');
-    }, sessionTimeoutDuration);
-*/
+    // // Set session timeout
+    // $timeout(function () {
+    //     NotificationService.notify('Your session is going to time out.');
+    // }, sessionTimeoutDuration);
+
     // Load existing applications
     ApplicationService.getDetails().then(function(response) {
-        $scope.applications = response.data;
-    }).catch(function(error) {
+        const loggedInName = localStorage.getItem('userName');
+        $scope.applications = response.data.filter(function(event) {
+            return event.fname === loggedInName;
+        });
+        }).catch(function(error) {
         LoggingService.log("Error fetching applications: " + error.message);
     });
 
