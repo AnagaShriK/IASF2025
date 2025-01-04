@@ -34,16 +34,16 @@
 
         <div class="form-container">
             <form name="applicationForm">
-                <label>Would you be interested in applying for {{purpose}}?</label><br>
+                <!-- <label>Would you be interested in applying for {{purpose}}?</label><br>
                 <div class="radio-buttons">
                     <input type="radio" id="yes" name="interest" ng-model="interest" value="yes" required>
                     <label for="yes">Yes</label>
                     <input type="radio" id="no" name="interest" ng-model="interest" value="no" required>
                     <label for="no">No</label>
-                </div>
+                </div> -->
                 <div class="input-container">
                     <input type="text" name="name" ng-model="fname" placeholder="Your Name" required>
-                    <input type="text" name="purpose-name" ng-model="purposeName" placeholder="{{purpose}} Name" required>
+                    <input type="text" name="purpose-name" ng-model="purposeName" placeholder="Volunteering Service Name" required>
                     <input type="email" name="email" ng-model="email" placeholder="Your Email" required>
                     <input type="tel" name="phone" ng-model="phone" placeholder="Your Phone No." ng-pattern="/^[0-9]{10}$/" required>
                     <span ng-show="applicationForm.phone.$error.pattern" style="color:red;">Invalid phone number, it should contain 10 digits</span>
@@ -58,11 +58,11 @@
             <h2>Hi {{fname}}. Thanks for Applying for {{purposeName}}</h2>
         </div>
 
-        <div>
+        <div style="background-color: rgba(248, 230, 207, 0.659); padding: 5px; margin: 5px;">
             <h2>Applications</h2>
-            <ul style="background-color: rgba(248, 230, 207, 0.659); padding: 5px; margin: 5px;">
+            <ul>
                 <li ng-repeat="application in applications">
-                    <p><b>{{ application.fname }} applied for {{ application.purpose }} - {{ application.purposeName }} ({{ application.email }})</b>
+                    <p><b>{{ application.fname }} applied for {{ application.purpose}} - {{ application.purposeName }} ({{ application.email }})</b>
                </li>
             </ul>
         </div>
