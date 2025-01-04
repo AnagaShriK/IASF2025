@@ -7,13 +7,22 @@ $scope.submitLogin = function() {
     console.log('Login Data:', loginData); // Debugging line
 
     $http.post('https://iasf2025.onrender.com/api/login', loginData)
-        .then(function(response) {
+    .then(function(response) {
+        if (response.data.message === 'Login successful') {  // Check for success
             alert('Login successful!');
-            localStorage.setItem('token', response.data.token);
-            window.location.href = 'welcome.html'; // Redirect to another page
-        })
-        .catch(function(error) {
-            console.error('Error during login:', error);
-            alert('Error during login: ' + (error.data ? error.data.message : error.message));
-        });
+
+            // Store the organisation's name in localStorage
+            localStorage.setItem('organizationName', response.data.name); 
+
+            // Redirect to the respective homepage
+            window.location.href = 'welcome.html';  
+        } else {
+            alert('Login failed: ' + response.data.message);
+        }
+    })
+    .catch(function(error) {
+        console.error('Error during login:', error);
+        alert('Error during login: ' + (error.data ? error.data.message : error.message));
+    });
+
 };
