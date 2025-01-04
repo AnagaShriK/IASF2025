@@ -4,16 +4,16 @@ var MyApp = angular.module("MyApp", []);
 MyApp.factory('ApplicationService', function($http) {
     return {
         addDetails: function(application) {
-            return $http.post('http://localhost:3000/api/applications', application);
+            return $http.post('https://iasf2025.onrender.com/api/applications', application);
         },
         getDetails: function() {
-            return $http.get('http://localhost:3000/api/applications');
+            return $http.get('https://iasf2025.onrender.com/api/applications');
         },
         removeDetails: function(id) {
-            return $http.delete('http://localhost:3000/api/applications/' + id);
+            return $http.delete('https://iasf2025.onrender.com/api/applications/' + id);
         },
         updateDetails: function(id, application) {
-            return $http.put('http://localhost:3000/api/applications/' + id, application);
+            return $http.put('https://iasf2025.onrender.com/api/applications/' + id, application);
         }
     };
 });
